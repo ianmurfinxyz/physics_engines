@@ -1,9 +1,17 @@
 
 #include "../system/types.h"
+#include "math/units.h"
+#include "math/math_defs.h"
 
 namespace cfg
 {
-const I32 physics_frequency_hz {30};
-const I32 physics_tick_limit {5};
-const I32 render_frequency_hz {60};
+namespace physics
+{
+const real_t tick_frequency = 30.0_hz;
+const real_t tick_delta = (1.0 / physics_tick_frequency); 
+const I32 tick_limit = 5;
+const real_t linear_damping = 0.999;
+const real_t angular_damping = 0.999;
+}
+const real_t render_tick_frequency = 60.0_hz;
 }
