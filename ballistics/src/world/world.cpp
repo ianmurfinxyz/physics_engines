@@ -2,13 +2,15 @@
 #include "bullet.h"
 #include "../core/config.h"
 
-const static real_t harry_angular_velocity {10.0};
+const static real_t harry_swivel_speed {40.0_deg_p_s};
+const static real_t particle_lifetime {2.0_s};
 
 static const bullet artillery = {
   50.0_m_p_s,
   1.0 / 200.0_kg,
   20.0_m_p_s2,
   0.99,
+  20.0_px,
   40,
   40,
   40
@@ -19,12 +21,13 @@ static const bullet fireball = {
   1.0 / 1.0_kg,
   -0.6_m_p_s2,
   0.9,
+  10.0_px,
   255,
   68,
   0
 };
 
-world::world() : _harry{{50.0, cfg::world::screen_height - 50.0}, 0.0, &fireball, 0.5, 0, 0, 0)}
+world::world() : _harry{{50.0, cfg::world::screen_height - 50.0}, 0.0, &fireball, 0.5, 0, 0, 0}
 {}
 
 void world::on_event(const SDL_Event& event)
@@ -33,10 +36,10 @@ void world::on_event(const SDL_Event& event)
   {
   case SDL_KEYDOWN:
     if(event.key.keysym.sym == SDLK_DOWN)
-      _harry.set_angular_velocity(harry_angular_velocity);
+      _harry.set_angular_velocity(harry_swivel_speed);
 
     else if(event.key.keysym.sym == SDLK_UP)
-      _harry.set_angular_velocity(-harry_angular_velocity);
+      _harry.set_angular_velocity(-harry_swivel_speed);
 
     else if(event.key.keysym.sym == SDLK_SPACE && !event.key.repeat)
       _harry.fire(_particles);
@@ -55,6 +58,13 @@ void world::tick()
 
   for(auto& p : _particles)
     p.tick();
+
+  for(auto iter = _particles.begin(); iter != _particles.end();){
+    if((*iter).get_age() > particle_lifetime)
+      iter = _particles.erase(iter);
+    else
+      ++iter;
+  }
 }
 
 void world::draw(SDL_Renderer *renderer)
@@ -70,12 +80,12 @@ void world::draw(SDL_Renderer *renderer)
   field.w = cfg::world::screen_width;
   field.h = 40;
   SDL_SetRenderDrawColor(renderer, 123, 181, 110, SDL_ALPHA_OPAQUE);
-  SDL_RenderFillRect(renderer, field);
+  SDL_RenderFillRect(renderer, &field);
 
-  _harry.draw();
+  _harry.draw(renderer);
 
   for(auto& p : _particles)
-    p.draw();
+    p.draw(renderer);
 
   SDL_RenderPresent(renderer);
 }

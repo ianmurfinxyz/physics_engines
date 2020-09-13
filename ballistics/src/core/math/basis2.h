@@ -1,7 +1,7 @@
 #ifndef _BASIS2_H_
 #define _BASIS2_H_
 
-#include <cmath>
+#include "vec2.h"
 
 class basis2
 {
@@ -18,7 +18,7 @@ public:
   vec2 transform(const vec2& v) const;
 
   basis2 operator*(const basis2& b) const;
-  void operator*=(const basis2* b);
+  void operator*=(const basis2& b);
 
   void set_identity();
 

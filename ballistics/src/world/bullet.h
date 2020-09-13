@@ -10,6 +10,7 @@ struct bullet
   real_t _inverse_mass;
   real_t _gravity;
   real_t _damping;
+  real_t _radius;
   U8 _r;
   U8 _g;
   U8 _b;

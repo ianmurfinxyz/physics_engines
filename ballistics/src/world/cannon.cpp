@@ -1,5 +1,4 @@
 #include <SDL2/SDL.h>
-#include <list>
 #include <cassert>
 #include <cmath>
 #include "cannon.h"
@@ -12,9 +11,9 @@ static SDL_Point cannon_mesh[4] = {
     { 20, -10}
 };
 
-cannon::cannon(vec2 position, real_t angle, const bullet *b, real_t damping, U8 r, U8 g, U8 b) :
+cannon::cannon(vec2 position, real_t angle, const bullet *bt, real_t damping, U8 r, U8 g, U8 b) :
   _transform{angle, position},
-  _bullet{b},
+  _bullet{bt},
   _angular_velocity{0.0},
   _damping{damping},
   _r{r},
@@ -35,7 +34,7 @@ void cannon::tick()
   }
 }
 
-void cannont::draw(SDL_Renderer* renderer)
+void cannon::draw(SDL_Renderer* renderer)
 {
   static SDL_Point points[4];
 
@@ -55,22 +54,21 @@ void cannont::draw(SDL_Renderer* renderer)
   SDL_RenderDrawLines(renderer, points, 4);
 }
 
-void cannon::fire(const std::list<particle>& particles) const
+void cannon::fire(std::list<particle>& particles) const
 {
-  std::assert(_bullet != nullptr);
+  assert(_bullet != nullptr);
 
-  particle p{
+  particles.emplace_back(
     _transform.get_translation(),
-    _transform.transform_direction({_bullet->speed, 0.0}),
-    {0.0, _bullet->gravity},
+    _transform.transform_direction({_bullet->_speed, 0.0}),
+    vec2{0.0, _bullet->_gravity},
     _bullet->_inverse_mass,
     _bullet->_damping,
+    _bullet->_radius,
     _bullet->_r,
     _bullet->_g,
     _bullet->_b
-  };
-
-  particles.push_back(p);
+  );
 }
 
 void cannon::set_bullet(const bullet *b)

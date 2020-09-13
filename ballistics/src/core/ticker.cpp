@@ -1,9 +1,9 @@
 #include "ticker.h"
 
-ticker::ticker(I32 frequency_hz, I32 frame_tick_limit, std::chrono::nanoseconds origin, tick_mode mode)
+ticker::ticker(real_t frequency, I32 frame_tick_limit, std::chrono::nanoseconds origin, tick_mode mode)
 {
   _next_tick = origin;
-  _frequency_hz = frequency_hz;
+  _frequency = frequency;
   _frame_tick_limit = frame_tick_limit;
   _mode = mode;
 
@@ -12,7 +12,7 @@ ticker::ticker(I32 frequency_hz, I32 frame_tick_limit, std::chrono::nanoseconds 
   _frame_tick_count = 0;
   _is_signalled = false;
 
-  _period = std::chrono::nanoseconds {static_cast<I64>(1.0e9 / static_cast<double>(frequency_hz))};
+  _period = std::chrono::nanoseconds {static_cast<I64>(1.0e9 / frequency)};
 }
 
 bool ticker::next_tick(const std::chrono::nanoseconds& game_time, I64 frame)

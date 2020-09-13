@@ -19,8 +19,8 @@ public:
   vec2 transform_direction(vec2 v) const;
 
   real_t get_angle() const;
-  const basis2& get_basis() const {return basis;}
-  vec2 get_translation() const {return translation;}
+  const basis2& get_basis() const {return _basis;}
+  vec2 get_translation() const {return _translation;}
 
 private:
   basis2 _basis;

@@ -16,7 +16,7 @@ public:
   // call within the physics update for now
   void tick();
 
-  void draw();
+  void draw(SDL_Renderer *renderer);
 
 private:
   std::list<particle> _particles;

@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include "../system/types.h"
+#include "math/math_defs.h"
 
 //
 // Manages the ticking of a subsystem.
@@ -12,7 +13,7 @@ class ticker
 public:
   enum class tick_mode { timed, manual };
 
-  explicit ticker(I32 frequency_hz, 
+  explicit ticker(real_t frequency, 
                   I32 frame_tick_limit, 
                   std::chrono::nanoseconds origin = std::chrono::nanoseconds {0},
                   tick_mode mode = tick_mode::timed);
@@ -54,7 +55,7 @@ private:
   std::chrono::nanoseconds _period;       // period of each tick
   I64 _count;                             // total times ticked
   I64 _frame;                             // frame of last tick
-  I32 _frequency_hz;                      // rate of ticking
+  real_t _frequency;                      // rate of ticking
   I32 _frame_tick_count;                  // ticks performed this frame
   I32 _frame_tick_limit;                  // max ticks performed each frame
   tick_mode _mode;

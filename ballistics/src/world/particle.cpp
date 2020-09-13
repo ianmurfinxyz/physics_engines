@@ -8,7 +8,8 @@ particle::particle(real_t inverse_mass, real_t damping) :
   _acceleration{0.0, 0.0},
   _radius{1.f},
   _inverse_mass{inverse_mass},
-  _damping{damping}
+  _damping{damping},
+  _age{0.0},
   _r{255},
   _g{255},
   _b{255}
@@ -19,21 +20,23 @@ particle::particle(vec2 acceleration, real_t inverse_mass, real_t damping) :
   _velocity{0.0, 0.0}, 
   _acceleration{acceleration},
   _radius{1.f},
-  _inverse_mass{inverse_mass} 
-  _damping{damping}
+  _inverse_mass{inverse_mass},
+  _damping{damping},
+  _age{0.0},
   _r{255},
   _g{255},
   _b{255}
 {}
                                                              
 
-particle(vec2 position, vec2 velocity, vec2 acceleration, real_t radius, real_t inverse_mass, real_t damping, U8 r, U8 g, U8 b) :
+particle::particle(vec2 position, vec2 velocity, vec2 acceleration, real_t radius, real_t inverse_mass, real_t damping, U8 r, U8 g, U8 b) :
   _position{position}, 
   _velocity{velocity}, 
   _acceleration{acceleration},
   _radius{radius},
-  _inverse_mass{inverse_mass} 
+  _inverse_mass{inverse_mass},
   _damping{damping},
+  _age{0.0},
   _r{r},
   _g{g},
   _b{b}
@@ -50,6 +53,8 @@ void particle::tick()
 
   _velocity += _acceleration * cfg::physics::tick_delta;
   _velocity *= _damping;
+
+  _age += cfg::physics::tick_delta;
 }
 
 void particle::draw(SDL_Renderer *renderer)
@@ -61,5 +66,5 @@ void particle::draw(SDL_Renderer *renderer)
   rect.h = rect.w;
 
   SDL_SetRenderDrawColor(renderer, _r, _g, _b, SDL_ALPHA_OPAQUE);
-  SDL_RenderFillRect(renderer, rect);
+  SDL_RenderFillRect(renderer, &rect);
 }

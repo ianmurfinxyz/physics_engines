@@ -2,7 +2,7 @@
 LDLIBS = -lSDL2 -lm
 
 CXXFLAGS = -g -Wall
-srcdirs = src src/core src/system
+srcdirs = src src/core src/core/math src/system src/world
 objdirs = $(subst src,bin,$(srcdirs))
 
 # Grab all source and header files in all $(dirs)
@@ -25,7 +25,11 @@ bin/%.o: src/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 bin/core/%.o: src/core/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
+bin/core/math/%.o: src/core/math/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 bin/system/%.o: src/system/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+bin/world/%.o: src/world/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 .PHONY: mkdirs
