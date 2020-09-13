@@ -34,25 +34,8 @@ bin/world/%.o: src/world/%.cpp
 
 .PHONY: mkdirs
 mkdirs:
-	echo "making obj dirs: $(objdirs)"
 	mkdir $(objdirs)
 
 .PHONY: clean
 clean:
-	rm -f $(objs) bin/$(main)
-	rmdir bin
-
-#.PHONY: install
-#install: $(main)
-#	mkdir -p $(DESTDIR)$(PREFIX)/bin
-#	cp bin/$(main) $(DESTDIR)$(PREFIX)/bin/$(main)
-#	mkdir -p $(DESTDIR)$(PREFIX)/man/man1
-#	cp man/$(main).1 $(DESTDIR)$(PREFIX)/man/man1/$(main).1
-#
-#.PHONY: uninstall
-#uninstall:
-#	rm -f $(DESTDIR)$(PREFIX)/bin/$(main)
-#	rm -f $(DESTDIR)$(PREFIX)/bin/$(main_run)
-#	rm -f $(DESTDIR)$(PREFIX)/man/man1/$(main).1
-#	rm -f $(DESTDIR)$(PREFIX)/man/man1/$(main_run).1
-	
+	rm -rf bin

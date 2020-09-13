@@ -2,7 +2,7 @@
 #define _UNITS_H_
 
 //
-// Linear Spatial Units
+// linear Spatial Units
 //
 // note - px == m (meters) is the base unit of world space.
 //
@@ -49,7 +49,7 @@ constexpr long double operator"" _g(long double g){return g * 1.0e3;}
 constexpr long double operator"" _kg(long double kg){return kg;}
 
 //
-// Frequencies
+// frequencies
 //
 constexpr long double operator"" _hz(long double hz){return hz;}
 
