@@ -2,6 +2,9 @@
 #include "particle.h"
 #include "../core/config.h"
 
+
+#include <iostream>
+
 particle::particle(real_t inverse_mass, real_t damping) : 
   _position{0.0, 0.0}, 
   _velocity{0.0, 0.0}, 

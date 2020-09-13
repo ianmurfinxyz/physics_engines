@@ -2,32 +2,33 @@
 #include "bullet.h"
 #include "../core/config.h"
 
-const static real_t harry_swivel_speed {40.0_deg_p_s};
-const static real_t particle_lifetime {2.0_s};
+const static real_t harry_swivel_speed {60.0_deg_p_s};
+const static real_t harry_swivel_damping {0.8};
+const static real_t particle_lifetime {10.0_s};
 
 static const bullet artillery = {
-  50.0_m_p_s,
+  400.0_m_p_s,
   1.0 / 200.0_kg,
-  20.0_m_p_s2,
+  120.0_m_p_s2,
   0.99,
-  20.0_px,
+  5.0_px,
   40,
   40,
   40
 };
 
 static const bullet fireball = {
-  10.0_m_p_s,
+  500.0_m_p_s,
   1.0 / 1.0_kg,
-  -0.6_m_p_s2,
-  0.9,
-  10.0_px,
+  -100.0_m_p_s2,
+  0.95,
+  3.0_px,
   255,
   68,
   0
 };
 
-world::world() : _harry{{50.0, cfg::world::screen_height - 50.0}, 0.0, &fireball, 0.5, 0, 0, 0}
+world::world() : _harry{{50.0, cfg::world::screen_height - 50.0}, 0.0, &fireball, harry_swivel_damping, 0, 0, 0}
 {}
 
 void world::on_event(const SDL_Event& event)

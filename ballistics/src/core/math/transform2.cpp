@@ -1,4 +1,3 @@
-
 #include "transform2.h"
 
 transform2::transform2(const basis2& b, vec2 translation) :

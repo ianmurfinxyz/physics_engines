@@ -68,6 +68,7 @@ void engine::gameloop()
   }
 
   while(_physics_ticker.next_tick(_game_clock.get_now(), _frame)) {
+    //cout << "physics tick: " << static_cast<double>(_game_clock.get_now().count()) / 1.0e9  << "s" << endl;
     _world->tick();
   }
 
