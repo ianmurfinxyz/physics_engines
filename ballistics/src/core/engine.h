@@ -8,6 +8,7 @@
 #include "../system/high_resolution_clock.h"
 #include "ticker.h"
 #include "config.h"
+#include "../world/world.h"
 
 class engine
 {
@@ -29,6 +30,8 @@ private:
 
   SDL_Window *_window;
   SDL_Renderer *_renderer;
+
+  world *_world;
 
   I64 _frame;
   bool _is_running;

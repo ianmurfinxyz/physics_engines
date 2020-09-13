@@ -13,5 +13,13 @@ const I32 tick_limit = 5;
 const real_t linear_damping = 0.999;
 const real_t angular_damping = 0.999;
 }
+namespace renderer
+{
 const real_t render_tick_frequency = 60.0_hz;
+}
+namespace world
+{
+const I32 screen_width = 800;
+const I32 screen_height = 600;
+}
 }

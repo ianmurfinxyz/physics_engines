@@ -8,6 +8,7 @@ engine::engine() : _real_time{},
                    _game_clock{}, 
                    _physics_ticker{cfg::physics_frequency_hz, cfg::physics_tick_limit},
                    _render_ticker{cfg::render_frequency_hz, 1},
+                   _world{nullptr},
                    _frame{-1},
                    _is_running{true}
 {}
@@ -24,10 +25,14 @@ void engine::init()
     exit(EXIT_FAILURE);
   }
 
+  _world = new world{};
 }
 
 void engine::shutdown()
 {
+  delete _world;
+  _world = nullptr;
+
   SDL_DestroyRenderer(_renderer);
   SDL_DestroyWindow(_window);
   SDL_Quit();
@@ -59,18 +64,15 @@ void engine::gameloop()
         _is_running = false;
         break;
     }
+    _world.on_event(event);
   }
 
   while(_physics_ticker.next_tick(_game_clock.get_now(), _frame)) {
-
-    // tick physics engine...
-    
+    _world.tick();
   }
 
   while(_render_ticker.next_tick(_game_clock.get_now(), _frame)) {
-
-    // tick renderer...
-
+    _world.draw(_renderer);
   }
 
 }

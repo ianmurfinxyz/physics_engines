@@ -10,14 +10,16 @@ class particle
 public:
   particle(real_t inverse_mass, real_t damping);
   particle(vec2 acceleration, real_t inverse_mass, real_t damping);
-  particle(vec2 position, vec2 velocity, vec2 acceleration, real_t inverse_mass, real_t damping, U8 r, U8 g, U8 b);
+  particle(vec2 position, vec2 velocity, vec2 acceleration, real_t radius, real_t inverse_mass, real_t damping, U8 r, U8 g, U8 b);
 
-  void tick()
+  void tick();
+  void draw(SDL_Renderer* renderer);
 
 private:
   vec2 _position;
   vec2 _velocity;
   vec2 _acceleration;
+  real_t _radius;
   real_t _inverse_mass;
   real_t _damping;
   U8 _r;
